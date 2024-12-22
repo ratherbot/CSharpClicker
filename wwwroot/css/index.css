@@ -1,0 +1,57 @@
+﻿.click-item:active, .boost-button:active {
+    opacity: 0.7;
+}
+
+.welcome-block {
+    margin-bottom: 2rem; /* Отступ от блока с бустами */
+    text-align: center;
+}
+
+/* Центрирование бустов */
+.boosts-container {
+    margin-top: 2rem; /* Отступ сверху от блока приветствия */
+    gap: 1rem; /* Промежуток между бустами */
+    justify-content: center;
+}
+
+.tips-container {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+}
+
+.tips-arrow {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 0 10px;
+    transition: transform 0.2s ease;
+}
+
+    .tips-arrow:hover {
+        transform: scale(1.2);
+    }
+
+.tips-content {
+    max-width: 300px;
+    text-align: center;
+    padding: 0 10px;
+    font-size: 16px;
+    overflow-wrap: break-word;
+}
+
+.boosts-container {
+    margin-bottom: 100px;
+}
