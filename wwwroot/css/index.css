@@ -3,14 +3,13 @@
 }
 
 .welcome-block {
-    margin-bottom: 2rem; /* Отступ от блока с бустами */
+    margin-bottom: 2rem;
     text-align: center;
 }
 
-/* Центрирование бустов */
 .boosts-container {
-    margin-top: 2rem; /* Отступ сверху от блока приветствия */
-    gap: 1rem; /* Промежуток между бустами */
+    margin-top: 2rem;
+    gap: 1rem;
     justify-content: center;
 }
 
@@ -54,4 +53,39 @@
 
 .boosts-container {
     margin-bottom: 100px;
+}
+
+.ore-click-area {
+    display: inline-block;
+    position: relative;
+}
+
+.ore-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.ore-image {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    pointer-events: none;
+    animation: float-up 1.5s ease-out forwards;
+}
+
+@keyframes float-up {
+    0% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateY(-100px);
+    }
 }

@@ -17,12 +17,18 @@
             <h4>С одного удара киркой ты добываешь <span id="profit_per_click">@Model.User.ProfitPerClick</span> алмазов</h4>
             <h4>Твои подчиненные ежесекундно добывают <span id="profit_per_second">@Model.User.ProfitPerSecond</span> алмазов</h4>
 
-            <button id="clickitem" class="click-item bg-transparent border-0">
-                <img class="w-50" src="~/ore.png" />
-            </button>
+            <!-- Блок с рудой -->
+            <div class="ore-click-area position-relative d-inline-block">
+                <button id="clickitem" class="click-item bg-transparent border-0 position-relative">
+                    <img class="w-50" src="~/ore.png" alt="Руда" />
+                    <!-- Контейнер для всплывающих алмазов -->
+                    <div id="ore-container" class="ore-container"></div>
+                </button>
+            </div>
         </div>
     </div>
 </div>
+
 
 <div class="row justify-content-center">
     <div class="col-8 text-center">
@@ -30,13 +36,8 @@
         <div class="boosts-container d-flex justify-content-center flex-wrap">
             @foreach (var boost in Model.Boosts)
             {
-
                 var userBoost = Model.User.UserBoosts.FirstOrDefault(ub => ub.BoostId == boost.Id);
-
-
-
                 var price = userBoost?.CurrentPrice ?? boost.Price;
-
                 var quantity = userBoost?.Quantity ?? 0;
 
                 <button class="boost-button border-0 bg-secondary m-3">
@@ -47,7 +48,6 @@
                     <h5>
                         Доход: @boost.Profit
                         @if (boost.IsAuto)
-
                         {
                             <span> в секунду</span>
                         }
@@ -68,7 +68,6 @@
     </div>
     <button class="tips-arrow right-arrow" onclick="changeTip(1)">&#8594;</button>
 </div>
-
 
 @section scripts {
     <script src="~/js/index.js"></script>

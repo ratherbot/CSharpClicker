@@ -154,6 +154,7 @@ function toggleBoostsAvailability() {
     } 
 }
 
+// Блок с подсказками
 const tips = [
     "Подсказка 1: Используйте кирку для добычи руды!",
     "Подсказка 2: Покупайте бусты, чтобы увеличить доход.",
@@ -167,14 +168,37 @@ let currentTipIndex = 0;
 function changeTip(direction) {
     currentTipIndex += direction;
 
-    // Зацикливание индекса
     if (currentTipIndex < 0) {
         currentTipIndex = tips.length - 1;
     } else if (currentTipIndex >= tips.length) {
         currentTipIndex = 0;
     }
 
-    // Обновление текста подсказки
     const tipTextElement = document.getElementById("tip-text");
     tipTextElement.textContent = tips[currentTipIndex];
 }
+
+// Блок с появляющимися алмазами
+document.addEventListener('DOMContentLoaded', () => {
+    const oreButton = document.getElementById('clickitem');
+    const oreContainer = document.getElementById('ore-container');
+
+    oreButton.addEventListener('click', () => {
+        const oreImage = document.createElement('img');
+        oreImage.src = '/images/OreImages/diamond.png';
+        oreImage.classList.add('ore-image');
+
+        const containerWidth = oreContainer.offsetWidth;
+        const containerHeight = oreContainer.offsetHeight;
+        const randomX = Math.random() * containerWidth;
+        const randomY = Math.random() * containerHeight;
+
+        oreImage.style.left = `${randomX}px`;
+        oreImage.style.top = `${randomY}px`;
+
+        oreContainer.appendChild(oreImage);
+        oreImage.addEventListener('animationend', () => {
+            oreImage.remove();
+        });
+    });
+});
