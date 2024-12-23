@@ -15,6 +15,8 @@ public class AppDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, 
 
     public DbSet<UserBoost> UserBoosts { get; private set; }
 
+    public DbSet<Achievement> Achievements { get; private set; }
+
     public AppDbContext(DbContextOptions options) : base(options)
     {
     }

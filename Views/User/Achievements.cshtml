@@ -1,0 +1,30 @@
+﻿@model IEnumerable<CSharpClicker.Web.Domain.Achievement>;
+
+@{
+    Layout = "~/Views/Shared/_HatLayout.cshtml";
+}
+
+@section styles {
+    <link href="@Url.Content("~/css/achievements.css")" rel="stylesheet">
+}
+
+<div class="container mt-4">
+    <h1 class="text-center">Достижения</h1>
+    <div class="row mt-4">
+        @foreach (var achievement in Model)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <img src="data:image/png;base64,@Convert.ToBase64String(achievement.Icon)" class="card-img-top" alt="@achievement.Title">
+                    <div class="card-body">
+                        <h5 class="card-title">@achievement.Title</h5>
+                        <p class="card-text">@achievement.Description</p>
+                        <button class="btn btn-@(achievement.IsUnlocked ? "success" : "secondary")">
+                            @(achievement.IsUnlocked ? "Получено" : "Закрыто")
+                        </button>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

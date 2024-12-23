@@ -13,5 +13,7 @@ public interface IAppDbContext
 
     DbSet<UserBoost> UserBoosts { get; }
 
+    DbSet<Achievement> Achievements { get; }
+
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }

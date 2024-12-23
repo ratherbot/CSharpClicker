@@ -1,10 +1,14 @@
-﻿using CSharpClicker.Web.UseCases.GetLeaderboard;
+﻿using CSharpClicker.Web.Infrastructure.Abstractions;
+using CSharpClicker.Web.Infrastructure.DataAccess;
+using CSharpClicker.Web.UseCases.GetLeaderboard;
 using CSharpClicker.Web.UseCases.GetUserSettings;
 using CSharpClicker.Web.UseCases.SetUserAvatar;
 using CSharpClicker.Web.UseCases.SetUserBackground;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+
 
 namespace CSharpClicker.Web.Controllers;
 
@@ -13,11 +17,14 @@ namespace CSharpClicker.Web.Controllers;
 public class UserController : Controller
 {
     private readonly IMediator mediator;
+    private readonly IAppDbContext appDbContext;
 
-    public UserController(IMediator mediator)
+    public UserController(IMediator mediator, IAppDbContext appDbContext)
     {
         this.mediator = mediator;
+        this.appDbContext = appDbContext;
     }
+
 
     [HttpPost("avatar")]
     public async Task<IActionResult> SetAvatar(SetUserAvatarCommand command)
@@ -51,5 +58,15 @@ public class UserController : Controller
         await mediator.Send(command);
 
         return Ok(new { message = "Фон сохранён успешно." });
+    }
+
+    [HttpGet("achievements")]
+    public async Task<IActionResult> Achievements()
+    {
+        var achievements = await appDbContext.Achievements
+            .Include(a => a.Boost)
+            .ToListAsync();
+
+        return View(achievements);
     }
 }

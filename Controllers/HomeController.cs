@@ -1,4 +1,5 @@
 ﻿using CSharpClicker.Web.UseCases.AddPoints;
+using CSharpClicker.Web.UseCases.CheckAchievements;
 using CSharpClicker.Web.UseCases.Common;
 using CSharpClicker.Web.UseCases.GetBoosts;
 using CSharpClicker.Web.UseCases.GetCurrentUser;
@@ -21,6 +22,7 @@ public class HomeController : Controller
 
     public async Task<IActionResult> Index()
     {
+        await mediator.Send(new CheckAchievementsCommand());
         var boosts = await mediator.Send(new GetBoostsQuery());
         var user = await mediator.Send(new GetCurrentUserQuery());
 

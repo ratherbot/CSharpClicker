@@ -6,6 +6,35 @@ namespace CSharpClicker.Web.Initializers;
 
 public static class DbContextInitializer
 {
+    private static void AddDefaultAchievements(AppDbContext appDbContext)
+    {
+        if (!appDbContext.Achievements.Any())
+        {
+            var boosts = appDbContext.Boosts.ToList();
+
+            foreach (var boost in boosts)
+            {
+                appDbContext.Achievements.Add(new Achievement
+                {
+                    Title = $"Купить {boost.Title} x10",
+                    Description = $"Поздравляем! Вы купили 10 бустов {boost.Title}.",
+                    BoostId = boost.Id,
+                    RequiredQuantity = 10,
+                    Icon = File.ReadAllBytes($"wwwroot/images/achievements/{boost.Title.ToLower()}.png")
+                });
+
+                appDbContext.Achievements.Add(new Achievement
+                {
+                    Title = $"Купить {boost.Title} x50",
+                    Description = $"Поздравляем! Вы купили 50 бустов {boost.Title}.",
+                    BoostId = boost.Id,
+                    RequiredQuantity = 50,
+                    Icon = File.ReadAllBytes($"wwwroot/images/achievements/{boost.Title.ToLower()}-50.png")
+                });
+            }
+        }
+    }
+
     public static void AddAppDbContext(IServiceCollection services)
     {
         var pathToDbFile = GetPathToDbFile();
@@ -36,16 +65,6 @@ public static class DbContextInitializer
         const string Boost5 = "Herobrine";
 
         appDbContext.Database.Migrate();
-
-        var usersToUpdate = appDbContext.ApplicationUsers
-        .Where(user => string.IsNullOrEmpty(user.BackgroundPath))
-        .ToList();
-
-        foreach (var user in usersToUpdate)
-        {
-            user.BackgroundPath = "/images/Backgrounds/default-background.png";
-        }
-
         appDbContext.SaveChanges();
 
         var existingBoosts = appDbContext.Boosts
@@ -57,6 +76,7 @@ public static class DbContextInitializer
         AddBoostIfNotExist(Boost4, price: 10000, profit: 400);
         AddBoostIfNotExist(Boost5, price: 100000, profit: 5000, isAuto: true);
 
+        AddDefaultAchievements(appDbContext);
         AddRandomUsers();
 
         appDbContext.SaveChanges();
