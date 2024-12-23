@@ -37,14 +37,18 @@ public static class DbContextInitializer
 
         appDbContext.Database.Migrate();
 
-        var existingBoosts = appDbContext.Boosts.ToArray();
-        if (existingBoosts.Any())
+        var usersToUpdate = appDbContext.ApplicationUsers
+        .Where(user => string.IsNullOrEmpty(user.BackgroundPath))
+        .ToList();
+
+        foreach (var user in usersToUpdate)
         {
-            appDbContext.Boosts.RemoveRange(existingBoosts);
-            appDbContext.SaveChanges();
+            user.BackgroundPath = "/images/Backgrounds/default-background.png";
         }
 
-        existingBoosts = appDbContext.Boosts
+        appDbContext.SaveChanges();
+
+        var existingBoosts = appDbContext.Boosts
             .ToArray();
 
         AddBoostIfNotExist(Boost1, price: 100, profit: 1);

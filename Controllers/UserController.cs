@@ -1,6 +1,7 @@
 ﻿using CSharpClicker.Web.UseCases.GetLeaderboard;
 using CSharpClicker.Web.UseCases.GetUserSettings;
 using CSharpClicker.Web.UseCases.SetUserAvatar;
+using CSharpClicker.Web.UseCases.SetUserBackground;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -39,6 +40,16 @@ public class UserController : Controller
     {
         var userSettings = await mediator.Send(new GetCurrentUserSettingsQuery());
 
+        ViewData["BackgroundPath"] = userSettings.BackgroundPath;
+
         return View(userSettings);
+    }
+
+    [HttpPost("background")]
+    public async Task<IActionResult> SetBackground([FromBody] SetUserBackgroundCommand command)
+    {
+        await mediator.Send(command);
+
+        return Ok(new { message = "Фон сохранён успешно." });
     }
 }

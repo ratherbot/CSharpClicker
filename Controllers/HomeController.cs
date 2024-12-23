@@ -24,6 +24,8 @@ public class HomeController : Controller
         var boosts = await mediator.Send(new GetBoostsQuery());
         var user = await mediator.Send(new GetCurrentUserQuery());
 
+        ViewData["BackgroundPath"] = user.BackgroundPath;
+
         var viewModel = new IndexViewModel()
         {
             Boosts = boosts,

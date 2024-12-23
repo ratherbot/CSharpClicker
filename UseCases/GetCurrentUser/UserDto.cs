@@ -15,4 +15,6 @@ public class UserDto
     public long ProfitPerClick { get; set; }
 
     public long ProfitPerSecond { get; set; }
+
+    public string BackgroundPath { get; set; } = "/images/Backgrounds/default-background.png";
 }

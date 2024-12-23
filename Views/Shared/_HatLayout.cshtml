@@ -1,4 +1,12 @@
 ﻿@section styles {
+    <style>
+        body {
+            background-image: url('@ViewData["BackgroundPath"]');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+    </style>
     @await RenderSectionAsync("styles", required: false)
 }
 
@@ -31,4 +39,5 @@
 @section scripts {
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     @await RenderSectionAsync("scripts", required: false)
+    <script src="~/js/settings.js"></script>
 }
